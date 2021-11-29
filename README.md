@@ -31,37 +31,39 @@ terraform {
 ```
 
 ```dhall
-# assets_access.dhall
+-- assets_access.dhall
 let predicate =
       https://raw.githubusercontent.com/mjgpy3/iam-dhall/20bcc9c507d353fb3736a633280239a922b91aa6/policy.dhall
 
 let policy =
       https://raw.githubusercontent.com/mjgpy3/iam-dhall/20bcc9c507d353fb3736a633280239a922b91aa6/output.dhall
 
-let Aws : Type = { accountId : Text, region : Text }
+let Aws
+    : Type
+    = { accountId : Text, region : Text }
 
-{- Grant access to list the objects on a store, and get any object -}
-let listGetBucketAccess = \(bucket: Text) ->
-  [   predicate.serviceAllow 
-        predicate.Service.S3
-        [ "ListBucket" ]
-        [ bucket ]
-    // { sid = "ListObjects" }
-  ,   predicate.serviceAllow 
-        predicate.Service.S3
-        [ "GetObject" ]
-        [ "${bucket}/*" ]
-    // { sid = "GetObject" }
-  ]
+let listGetBucketAccess =
+      \(bucket : Text) ->
+        [     predicate.serviceAllow
+                predicate.Service.S3
+                [ "ListBucket" ]
+                [ bucket ]
+          //  { sid = "ListObjects" }
+        ,     predicate.serviceAllow
+                predicate.Service.S3
+                [ "GetObject" ]
+                [ "${bucket}/*" ]
+          //  { sid = "GetObject" }
+        ]
 
-let assetsAccess = \(aws: Aws) ->
-  policy
-  aws
-  (
-    {- merge access to public-assets and static-assets -}
-      ( listGetBucketAccess "public-assets" )
-    # ( listGetBucketAccess "static-assets" )
-  )
+let assetsAccess =
+      \(aws : Aws) ->
+        policy
+          aws
+          (   listGetBucketAccess "public-assets"
+            # listGetBucketAccess "static-assets"
+          )
 
-in assetsAccess
+in  assetsAccess
+
 ```
