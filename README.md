@@ -60,7 +60,8 @@ let assetsAccess =
       \(aws : Aws) ->
         policy
           aws
-          (   listGetBucketAccess "public-assets"
+          (   {- merge access to public-assets and static-assets -}
+              listGetBucketAccess "public-assets"
             # listGetBucketAccess "static-assets"
           )
 
