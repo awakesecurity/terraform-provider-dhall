@@ -1,9 +1,7 @@
 package main
 
 import (
-	"context"
 	"flag"
-	"log"
 
 	"github.com/awakesecurity/terraform-provider-dhall/internal/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
@@ -20,11 +18,8 @@ func main() {
 	opts := &plugin.ServeOpts{ProviderFunc: provider.New}
 
 	if debugMode {
-		err := plugin.Debug(context.Background(), "registry.terraform.io/awakesecurity/dhall", opts)
-		if err != nil {
-			log.Fatal(err.Error())
-		}
-		return
+		opts.Debug = true
+		opts.ProviderAddr = "registry.terraform.io/awakesecurity/dhall"
 	}
 
 	plugin.Serve(opts)
