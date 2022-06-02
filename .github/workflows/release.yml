@@ -28,7 +28,9 @@ jobs:
         name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.14
+          stable: 'false'
+          go-version: '>=1.17.0'
+
       -
         name: Import GPG key
         id: import_gpg
