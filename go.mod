@@ -18,7 +18,7 @@ require (
 	github.com/philandstuff/dhall-golang/v6 v6.0.2
 	github.com/vmihailenco/tagparser v0.1.2 // indirect
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
-	golang.org/x/net v0.0.0-20220531201128-c960675eff93 // indirect
+	golang.org/x/net v0.7.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20220601144221-27df5f98adab // indirect
 	google.golang.org/grpc v1.47.0 // indirect
