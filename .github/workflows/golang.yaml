@@ -2,21 +2,27 @@ name: pull request workflow
 
 on: pull_request
 
+env:
+  GO_VERSION: '1.21'
+
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
         with:
           stable: 'false'
-          go-version: '>=1.17.0'
+          go-version: ${{ env.GO_VERSION }}
 
-      - name: Lint
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.46.2
+      - name: lint
+        uses: golangci/golangci-lint-action@v3.7.0
+        with:
+          version: latest
+          # skip cache because of flaky behaviors
+          skip-build-cache: true
+          skip-pkg-cache: true
 
-          golangci-lint run
   test:
     runs-on: ubuntu-20.04
     steps:
@@ -24,7 +30,7 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           stable: 'false'
-          go-version: '>=1.17.0'
+          go-version: ${{ env.GO_VERSION }}
 
       - name: test
         run: go test -v ./...
