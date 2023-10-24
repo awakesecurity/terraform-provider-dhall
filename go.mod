@@ -17,7 +17,6 @@ require (
 	github.com/oklog/run v1.1.0 // indirect
 	github.com/philandstuff/dhall-golang/v6 v6.0.2
 	github.com/vmihailenco/tagparser v0.1.2 // indirect
-	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
-	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/net v0.17.0 // indirect
 	google.golang.org/grpc v1.53.0 // indirect
 )
